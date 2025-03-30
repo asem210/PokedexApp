@@ -1,4 +1,4 @@
-package com.example.cleanarchitecture.ui.home
+package com.example.cleanarchitecture.ui.features.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
