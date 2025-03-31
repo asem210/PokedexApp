@@ -94,8 +94,9 @@ fun BottomNavigationBar(navController: NavController) {
         )
 
         items.forEach { item ->
+            val isSelected = currentRoute == item.route
             NavigationBarItem(
-                selected = currentRoute == item.route,
+                selected = isSelected,
                 onClick = {
                     item.route?.let {
                         navController.navigate(item.route) {
@@ -112,11 +113,11 @@ fun BottomNavigationBar(navController: NavController) {
                 label = { Text(text = item.tittle) },
                 icon = {
                     Image(
-                        painter = painterResource(id = item.icon),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(if(currentRoute==item.route) MaterialTheme.colorScheme.primary else Color.Gray)
+                        painter = painterResource(id = if (isSelected) item.selectedIcon else item.icon),
+                        contentDescription = null
                     )
-                }, colors = NavigationBarItemDefaults.colors().copy(
+                },
+                colors = NavigationBarItemDefaults.colors().copy(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
                     selectedTextColor = MaterialTheme.colorScheme.primary,
                     unselectedTextColor = Color.Gray,

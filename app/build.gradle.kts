@@ -65,4 +65,10 @@ dependencies {
     //Navigation
     implementation (libs.androidx.navigation.compose)
 
+    // ✅ Gson para parsear JSON
+    implementation(libs.gson)
+
+    //Coil
+    implementation(libs.coil.compose)
+
 }
