@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.cleanarchitecture.R
+import com.example.cleanarchitecture.ui.components.header.Header
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -54,22 +55,7 @@ fun HomeComponent(navController: NavController, modifier: Modifier = Modifier) {
     )
     {
         item{
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .height(67.dp)
-                    .padding(8.dp)
-                ,
-                contentAlignment = Alignment.CenterStart // ✅ Centra el texto dentro del Box
-
-            ) {
-                Text(
-                    text = "Regiones",
-                    fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
-                    fontSize = 18.sp,
-                    color = Color.DarkGray
-                    )
-            }
+            Header(title = "Regiones")
         }
         items(regions) { region ->
             RegionCard(region)
