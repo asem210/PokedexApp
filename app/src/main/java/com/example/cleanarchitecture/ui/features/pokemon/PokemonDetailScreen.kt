@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.example.cleanarchitecture.ui.components.messageError.PokemonNotFound
 import com.example.cleanarchitecture.ui.components.pokemonCard.PokemonCard
@@ -26,7 +28,6 @@ fun PokemonDetailScreen(
     pokemonViewModel: PokemonViewModel = koinViewModel()
 ) {
 
-    // Recogemos los estados del ViewModel
     val pokemonState by pokemonViewModel.pokemonState.collectAsState()
     val errorMessage by pokemonViewModel.errorMessage.collectAsState()
     val speciesState by pokemonViewModel.speciesState.collectAsState()
@@ -35,7 +36,15 @@ fun PokemonDetailScreen(
     val systemUiController = rememberSystemUiController()
     val typeColor = getTypeColor(pokemonState)
 
-    // Aplicar color de status bar al detectar cambio de color
+    BackHandler {
+        systemUiController.setStatusBarColor(
+            color = Color.Unspecified,
+            darkIcons = true
+        )
+        navController.popBackStack() // Retrocedemos a la pantalla anterior
+    }
+
+
     LaunchedEffect(typeColor) {
         systemUiController.setStatusBarColor(
             color = typeColor,
@@ -43,14 +52,11 @@ fun PokemonDetailScreen(
         )
     }
 
-
-    // Llamamos al ViewModel cuando se recibe el código
     LaunchedEffect(pokemonCode) {
         pokemonViewModel.fetchPokemon(pokemonCode)
-        pokemonViewModel.fetchPokemonSpecies(pokemonCode) // Llamada para obtener la especie
+        pokemonViewModel.fetchPokemonSpecies(pokemonCode)
     }
 
-    // Usamos un Column para organizar los elementos de manera vertical
     Column(modifier = Modifier.fillMaxSize()) {
 
         Box(
@@ -66,7 +72,6 @@ fun PokemonDetailScreen(
                 }
 
                 else -> {
-                    // Si aún no hay datos ni errores, se muestra el mensaje de carga
                     Text(
                         text = "Loading Pokemon Information",
                         modifier = Modifier.align(Alignment.Center)

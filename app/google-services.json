@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "696268675325",
+    "project_id": "pokedex-auth-2b7f6",
+    "storage_bucket": "pokedex-auth-2b7f6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696268675325:android:06c3ce0d1ac254d57b4694",
+        "android_client_info": {
+          "package_name": "com.example.cleanarchitecture"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "696268675325-eqchnik00t4jma0fllgj75tvk5glntln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cleanarchitecture",
+            "certificate_hash": "92607e902b04f18c3d6e63e55f126deb611ae13f"
+          }
+        },
+        {
+          "client_id": "696268675325-bakufgntubo71i1l8cits8o3dpanh1b8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdpuRjegTIs9E9zmzvCYvy2hm5wA6p3y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "696268675325-bakufgntubo71i1l8cits8o3dpanh1b8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

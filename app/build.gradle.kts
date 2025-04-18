@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.service)
 }
 
 android {
@@ -89,4 +90,17 @@ dependencies {
     implementation(libs.camera.mlkit.vision)
 
     implementation(libs.accompanist.systemuicontroller)
+
+    implementation(libs.androidx.constraintlayout.compose)
+
+
+    //Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation (libs.firebase.core)
+
+
+    //Firebase auth
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.play.services.auth)
 }
