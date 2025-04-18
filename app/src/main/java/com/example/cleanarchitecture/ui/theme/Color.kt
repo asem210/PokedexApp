@@ -31,6 +31,11 @@ val ground = Color(0xFFD97845)
 val poison = Color(0xFFB567CE)
 val flying = Color(0xFF89AAE3)
 
+val male = Color(0xFF2551C3)
+val female= Color(0xFFFF7596)
+
+val fontColorDefault = Color(0xB3000000)
+
 
 
 

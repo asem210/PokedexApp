@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.example.cleanarchitecture.ui.components.messageError.PokemonNotFound
 import com.example.cleanarchitecture.ui.components.pokemonCard.PokemonCard
-import com.example.cleanarchitecture.ui.components.pokemonCard.PokemonHeader
 import com.example.cleanarchitecture.utils.getTypeColor
 import com.example.cleanarchitecture.utils.isColorDark
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -26,12 +25,12 @@ fun PokemonDetailScreen(
     pokemonCode: String,
     pokemonViewModel: PokemonViewModel = koinViewModel()
 ) {
-    BackHandler(enabled = true) {
-    }
 
     // Recogemos los estados del ViewModel
     val pokemonState by pokemonViewModel.pokemonState.collectAsState()
     val errorMessage by pokemonViewModel.errorMessage.collectAsState()
+    val speciesState by pokemonViewModel.speciesState.collectAsState()
+
 
     val systemUiController = rememberSystemUiController()
     val typeColor = getTypeColor(pokemonState)
@@ -48,6 +47,7 @@ fun PokemonDetailScreen(
     // Llamamos al ViewModel cuando se recibe el código
     LaunchedEffect(pokemonCode) {
         pokemonViewModel.fetchPokemon(pokemonCode)
+        pokemonViewModel.fetchPokemonSpecies(pokemonCode) // Llamada para obtener la especie
     }
 
     // Usamos un Column para organizar los elementos de manera vertical
@@ -62,13 +62,13 @@ fun PokemonDetailScreen(
                 }
 
                 pokemonState != null -> {
-                    PokemonCard(pokemonState)
+                    PokemonCard(pokemonState,speciesState)
                 }
 
                 else -> {
                     // Si aún no hay datos ni errores, se muestra el mensaje de carga
                     Text(
-                        text = "Cargando información del Pokémon...",
+                        text = "Loading Pokemon Information",
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }

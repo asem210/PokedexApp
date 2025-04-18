@@ -47,3 +47,28 @@ fun getTypeColor(pokemonState: Pokemon?): androidx.compose.ui.graphics.Color {
     }
 }
 
+@Composable
+fun getTypeColorByName(typeName: String): androidx.compose.ui.graphics.Color {
+    return when (typeName.lowercase()) {
+        "water" -> water
+        "dragon" -> dragon
+        "electric" -> electric
+        "fairy" -> fairy
+        "ghost" -> ghost
+        "fire" -> fire
+        "ice" -> ice
+        "grass" -> grass
+        "bug" -> bug
+        "fighting" -> fighting
+        "normal" -> normal
+        "dark" -> dark
+        "steel" -> steel
+        "rock" -> rock
+        "psychic" -> psychic
+        "ground" -> ground
+        "poison" -> poison
+        "flying" -> flying
+        else -> normal // Color por defecto si no coincide
+    }
+}
+

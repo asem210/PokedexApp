@@ -55,26 +55,10 @@ fun HomeComponent(navController: NavController, modifier: Modifier = Modifier) {
     )
     {
         item{
-            Header(title = "Regiones")
+            Header(title = "Regions")
         }
         items(regions) { region ->
             RegionCard(region)
-        }
-    }
-}
-
-@Composable
-fun PokemonCard(name: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-        Box(
-            modifier = Modifier.padding(16.dp),
-            contentAlignment = androidx.compose.ui.Alignment.Center
-        ) {
-            Text(text = name)
         }
     }
 }
@@ -138,18 +122,16 @@ fun RegionCard(region:Regions){
 
                 )
             }
-            //Contenedor del texto
-
         }
     }
 }
 
 sealed class Regions(val name:String, val generation:String, val banner:Int, val url: Int){
-    object Kanto: Regions("Kanto", "1° Generacion", R.drawable.kanto_banner, R.drawable.first_gen_init )
-    object Johto: Regions("Johto", "2° Generacion", R.drawable.johto_banner,R.drawable.second_gen_init)
-    object Hoenn: Regions("Hoenn", "3° Generacion", R.drawable.hoenn_banner,R.drawable.third_gen_init)
-    object Sinnoh: Regions("Sinnoh", "4° Generacion", R.drawable.sinnoh_banner, R.drawable.fourth_gen_init)
-    object Unova: Regions("Unova", "5° Generacion", R.drawable.unova_banner,R.drawable.fifth_gen_init)
-    object Kalos: Regions("Kalos", "6° Generacion", R.drawable.kalos_banner,R.drawable.sixth_gen_init)
-    object Alola: Regions("Alola", "7° Generacion", R.drawable.alola_banner,R.drawable.seventh_gen_init)
+    object Kanto: Regions("Kanto", "1° Generation", R.drawable.kanto_banner, R.drawable.first_gen_init )
+    object Johto: Regions("Johto", "2° Generation", R.drawable.johto_banner,R.drawable.second_gen_init)
+    object Hoenn: Regions("Hoenn", "3° Generation", R.drawable.hoenn_banner,R.drawable.third_gen_init)
+    object Sinnoh: Regions("Sinnoh", "4° Generation", R.drawable.sinnoh_banner, R.drawable.fourth_gen_init)
+    object Unova: Regions("Unova", "5° Generation", R.drawable.unova_banner,R.drawable.fifth_gen_init)
+    object Kalos: Regions("Kalos", "6° Generation", R.drawable.kalos_banner,R.drawable.sixth_gen_init)
+    object Alola: Regions("Alola", "7° Generation", R.drawable.alola_banner,R.drawable.seventh_gen_init)
 }

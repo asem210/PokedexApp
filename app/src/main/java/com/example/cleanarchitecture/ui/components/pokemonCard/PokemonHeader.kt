@@ -38,23 +38,16 @@ fun PokemonHeader(
     onBackClick: () -> Unit = {},
     onFavoriteClick: () -> Unit = {}
 ) {
-    // Calcular el tamaño de la imagen basado en la altura del Pokémon
     val imageSize = pokemon?.height?.let {
-        // Rango de alturas
-        val minHeight = 1f  // Altura mínima (Pokémon más pequeño)
-        val maxHeight = 200f // Altura máxima (Pokémon más grande)
+        val minHeight = 1f
+        val maxHeight = 200f
 
-        // Normalización de la altura
         val normalizedHeight = (it - minHeight) / (maxHeight - minHeight)
 
-        // Escala lineal: mapea el valor de normalización entre 150.dp y 250.dp
-        val scaledHeight = (normalizedHeight * 100f + 150f).dp // 150.dp para el más pequeño, 250.dp para el más grande
-
-        // Limita el tamaño dentro del rango
-        scaledHeight.coerceIn(170.dp, 230.dp)  // Aseguramos que el tamaño esté entre 150.dp y 250.dp
+        val scaledHeight = (normalizedHeight * 100f + 150f).dp
+        scaledHeight.coerceIn(170.dp, 230.dp)
     } ?: 200.dp
 
-    // Tipo de color basado en el Pokémon
     val typeColor = getTypeColor(pokemon)
     val context = LocalContext.current
 
@@ -80,7 +73,7 @@ fun PokemonHeader(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(307.dp)
+            .height(300.dp)
             .background(typeColor)
     ) {
         // Top Bar: Back and Favorite buttons
@@ -110,10 +103,9 @@ fun PokemonHeader(
             }
         }
 
-        // Centered circular image of the Pokémon (círculo blanco de 250.dp fijo)
         Box(
             modifier = Modifier
-                .size(250.dp) // Aquí se establece un tamaño fijo para el círculo blanco
+                .size(250.dp)
                 .background(Color.White, shape = CircleShape)
                 .align(Alignment.Center)
                 .padding(4.dp)
@@ -123,8 +115,8 @@ fun PokemonHeader(
                     painter = painter,
                     contentDescription = "Pokemon Image",
                     modifier = Modifier
-                        .size(imageSize) // El tamaño de la imagen es dinámico, dependiendo del tamaño del Pokémon
-                        .align(Alignment.Center) // Esto asegura que la imagen esté centrada dentro del círculo
+                        .size(imageSize)
+                        .align(Alignment.Center)
                 )
             }
         }
