@@ -57,6 +57,7 @@ import com.example.cleanarchitecture.ui.components.scanner.ScanScreen
 import com.example.cleanarchitecture.ui.features.pokemon.PokemonDetailScreen
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.shouldShowRationale
+import com.google.firebase.FirebaseApp
 
 
 class MainActivity : ComponentActivity() {
@@ -64,6 +65,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        FirebaseApp.initializeApp(this)
         enableEdgeToEdge()
 
         setContent {
