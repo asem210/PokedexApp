@@ -35,8 +35,10 @@ val male = Color(0xFF2551C3)
 val female= Color(0xFFFF7596)
 
 val fontColorDefault = Color(0xB3000000)
+val fontGrayLight= Color(0xFF666666)
+val fontGrayMedium= Color(0xFF4D4D4D)
 
-
+val emailButton= Color(0xFF173EA5)
 
 
 

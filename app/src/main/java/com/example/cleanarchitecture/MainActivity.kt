@@ -54,6 +54,7 @@ import com.example.cleanarchitecture.ui.components.bottomNavBar.BottomNavigation
 import com.example.cleanarchitecture.ui.components.floattingButton.FloatingButton
 import com.example.cleanarchitecture.ui.components.scanner.ScanCode
 import com.example.cleanarchitecture.ui.components.scanner.ScanScreen
+import com.example.cleanarchitecture.ui.features.login.LoginScreen
 import com.example.cleanarchitecture.ui.features.pokemon.PokemonDetailScreen
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.shouldShowRationale
@@ -64,8 +65,8 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalPermissionsApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         FirebaseApp.initializeApp(this)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         enableEdgeToEdge()
 
         setContent {
@@ -77,20 +78,24 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
                         val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-                        if (currentRoute != "pokemon_detail/{pokemonCode}" && currentRoute!= "scan") {
+                        if (currentRoute != "pokemon_detail/{pokemonCode}" &&
+                            currentRoute != "scan" &&
+                            currentRoute?.startsWith("profile") != true
+                        ) {
                             BottomNavigationBar(navController)
                         }
                     },
                     floatingActionButton = {
-                        FloatingButton {
-                            when (permissionState.status) {
-                                is PermissionStatus.Granted -> {
-                                    // Permiso ya otorgado, navega al escáner
-                                    navController.navigate("scan")
-                                }
-                                is PermissionStatus.Denied -> {
-                                    // Solicitar permiso
-                                    permissionState.launchPermissionRequest()
+                        val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+                        if (currentRoute != "profile") {
+                            FloatingButton {
+                                when (permissionState.status) {
+                                    is PermissionStatus.Granted -> {
+                                        navController.navigate("scan")
+                                    }
+                                    is PermissionStatus.Denied -> {
+                                        permissionState.launchPermissionRequest()
+                                    }
                                 }
                             }
                         }
@@ -119,9 +124,11 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                             composable("profile") {
-                                Box(modifier = Modifier.fillMaxSize()) {
-                                    Text(text = "Profile")
-                                }
+                                LoginScreen(
+                                    onLoginSuccess = { user ->
+                                        Log.d("Login", "Usuario autenticado: ${user?.displayName}")
+                                    }
+                                )
                             }
                             composable("scan") {
                                 ScanScreen(

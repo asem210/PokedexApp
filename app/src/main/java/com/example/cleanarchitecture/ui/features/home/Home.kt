@@ -1,8 +1,6 @@
 package com.example.cleanarchitecture.ui.features.home
 
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,16 +21,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -55,6 +48,7 @@ fun HomeComponent(navController: NavController, modifier: Modifier = Modifier) {
         Regions.Kalos,
         Regions.Alola
     )
+
     LazyColumn(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -70,32 +64,18 @@ fun HomeComponent(navController: NavController, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun RegionCard(region: Regions) {
-    var pressed by remember { mutableStateOf(false) }
-    val scale by animateFloatAsState(
-        targetValue = if (pressed) 1.03f else 1f,
-        label = "cardScale"
-    )
-
+fun RegionCard(region:Regions){
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(120.dp)
-            .padding(8.dp)
-            .scale(scale) // 👉 Escalado animado
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onPress = {
-                        pressed = true
-                        tryAwaitRelease()
-                        pressed = false
-                    }
-                )
-            },
+            .padding(8.dp),
         elevation = CardDefaults.cardElevation(12.dp)
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            // Tu contenido tal cual
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ){
+            // Fondo con imagen del banner (background image?)
             AsyncImage(
                 model = region.banner,
                 contentDescription = "Banner de ${region.name}",
@@ -108,36 +88,27 @@ fun RegionCard(region: Regions) {
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(
-                                Color.Black.copy(alpha = 0.8f),
-                                Color.Black.copy(alpha = 0.15f)
-                            )
-                        )
+                                Color.Black.copy(alpha = 0.8f), // 🔹 Negro al 80% (arriba)
+                                Color.Black.copy(alpha = 0.15f) // 🔹 Negro al 15% (abajo)
+                            )                        )
                     )
             )
-            Row(
+            Row (
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Column(
+                ){
+                Column (
                     modifier = Modifier
                         .fillMaxHeight()
                         .clip(CardDefaults.shape),
                     verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = region.name,
-                        fontSize = 18.sp,
-                        color = Color.White,
-                        fontFamily = FontFamily(Font(R.font.poppins_semi_bold))
-                    )
-                    Text(
-                        text = region.generation,
-                        fontSize = 16.sp,
-                        color = Color.LightGray,
-                        fontFamily = FontFamily(Font(R.font.poppins_medium))
-                    )
+                ){
+                    Text(text = region.name, fontSize = 18.sp, color = Color.White, fontFamily = FontFamily(
+                        Font(R.font.poppins_semi_bold)
+                    ))
+                    Text(text = region.generation, fontSize = 16.sp, color = Color.LightGray, fontFamily = FontFamily(Font(R.font.poppins_medium)))
                 }
                 AsyncImage(
                     model = region.url,
@@ -147,13 +118,13 @@ fun RegionCard(region: Regions) {
                         .height(52.dp)
                         .width(167.dp)
                         .align(Alignment.CenterVertically)
-                        .padding(end = 16.dp)
+                        .padding(end = 16.dp) // Agrega padding a la derecha
+
                 )
             }
         }
     }
 }
-
 
 sealed class Regions(val name:String, val generation:String, val banner:Int, val url: Int){
     object Kanto: Regions("Kanto", "1° Generation", R.drawable.kanto_banner, R.drawable.first_gen_init )

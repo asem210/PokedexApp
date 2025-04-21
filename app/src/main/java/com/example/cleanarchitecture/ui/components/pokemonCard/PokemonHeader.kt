@@ -28,6 +28,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
+import com.example.cleanarchitecture.ui.components.header.TopBar
 import com.example.cleanarchitecture.utils.getTypeColor
 import com.example.domain.model.Pokemon
 
@@ -76,32 +77,11 @@ fun PokemonHeader(
             .height(300.dp)
             .background(typeColor)
     ) {
-        // Top Bar: Back and Favorite buttons
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onBackClick) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Regresar",
-                    tint = Color.White,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-
-            IconButton(onClick = onFavoriteClick) {
-                Icon(
-                    imageVector = Icons.Default.Favorite,
-                    contentDescription = "Favorito",
-                    tint = Color.White,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-        }
+        TopBar(
+            onBackClick = { /* Acción para retroceder */ },
+            onFavoriteClick = { /* Acción para el favorito */ },
+            showFavoriteButton = true
+        )
 
         Box(
             modifier = Modifier
