@@ -2,7 +2,7 @@ package com.example.cleanarchitecture.di
 
 import com.example.cleanarchitecture.ui.features.pokemon.PokemonViewModel
 import com.example.cleanarchitecture.ui.features.home.HomeViewModel
-import com.example.cleanarchitecture.ui.features.login.LoginViewModel
+import com.example.cleanarchitecture.ui.features.login.viewmodel.LoginViewModel
 import com.example.cleanarchitecture.ui.viewModel.pokemon.PokemonCardViewModel
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.core.module.dsl.viewModel

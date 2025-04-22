@@ -1,6 +1,8 @@
 package com.example.cleanarchitecture.ui.components.header
 
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,12 +26,13 @@ import com.example.cleanarchitecture.R
 
 @Composable
 fun TopBar(
-    onBackClick: () -> Unit,
     onFavoriteClick: () -> Unit,
     showFavoriteButton: Boolean = true,
     title: String? = null
 ) {
-    androidx.compose.foundation.layout.Box(
+    val backDispatcher = LocalOnBackPressedDispatcherOwner.current?.onBackPressedDispatcher
+
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
@@ -37,7 +40,7 @@ fun TopBar(
         val backIconColor = if (title != null) Color.Black else Color.White
 
         IconButton(
-            onClick = onBackClick,
+            onClick = { backDispatcher?.onBackPressed() },
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Icon(
@@ -60,7 +63,7 @@ fun TopBar(
 
         if (title == null && showFavoriteButton) {
             IconButton(
-                onClick = onFavoriteClick,
+                onClick = { backDispatcher?.onBackPressed() },
                 modifier = Modifier.align(Alignment.CenterEnd)
             ) {
                 Icon(

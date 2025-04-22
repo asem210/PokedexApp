@@ -78,7 +78,6 @@ fun PokemonHeader(
             .background(typeColor)
     ) {
         TopBar(
-            onBackClick = { /* Acción para retroceder */ },
             onFavoriteClick = { /* Acción para el favorito */ },
             showFavoriteButton = true
         )

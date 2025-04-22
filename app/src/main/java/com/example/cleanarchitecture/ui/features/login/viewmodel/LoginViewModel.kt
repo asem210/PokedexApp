@@ -1,10 +1,12 @@
-package com.example.cleanarchitecture.ui.features.login
+package com.example.cleanarchitecture.ui.features.login.viewmodel
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -50,9 +52,19 @@ class LoginViewModel(
         }
     }
 
-    fun logout() {
+    fun logout(context: Context) {
         auth.signOut()
-        _loginResult.value = null
-        _error.value = null
+
+        // También cerrar sesión en Google
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("696268675325-bakufgntubo71i1l8cits8o3dpanh1b8.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+        val googleSignInClient = GoogleSignIn.getClient(context, gso)
+        googleSignInClient.signOut().addOnCompleteListener {
+            _loginResult.value = null
+            Log.d("LoginViewModel", "Sesión cerrada completamente.")
+        }
     }
+
 }
