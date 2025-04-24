@@ -1,4 +1,4 @@
-package com.example.cleanarchitecture.ui.features.login.viewmodel
+package com.example.cleanarchitecture.ui.components.form.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

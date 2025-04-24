@@ -25,9 +25,12 @@ import android.Manifest
 import android.content.pm.ActivityInfo
 import com.example.cleanarchitecture.ui.components.bottomNavBar.BottomNavigationBar
 import com.example.cleanarchitecture.ui.components.floattingButton.FloatingButton
+import com.example.cleanarchitecture.ui.components.form.view.RegisterForm
 import com.example.cleanarchitecture.ui.components.scanner.ScanScreen
 import com.example.cleanarchitecture.ui.features.login.view.GmailLoginScreen
 import com.example.cleanarchitecture.ui.features.login.view.LoginScreen
+import com.example.cleanarchitecture.ui.features.login.view.PasswordRecoveryScreen
+import com.example.cleanarchitecture.ui.features.login.view.RegisterScreen
 import com.example.cleanarchitecture.ui.features.pokemon.PokemonDetailScreen
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.firebase.FirebaseApp
@@ -59,7 +62,7 @@ class MainActivity : ComponentActivity() {
                     },
                     floatingActionButton = {
                         val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-                        if (currentRoute != "profile") {
+                        if (currentRoute?.startsWith("profile") != true) {
                             FloatingButton {
                                 when (permissionState.status) {
                                     is PermissionStatus.Granted -> {
@@ -105,6 +108,13 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("profile/login/gmail") {
                                 GmailLoginScreen(navController = navController)
+                            }
+
+                            composable("profile/login/gmail/recovery"){
+                                PasswordRecoveryScreen(navController=navController)
+                            }
+                            composable("profile/login/gmail/register"){
+                                RegisterScreen(navController=navController)
                             }
                             composable("scan") {
                                 ScanScreen(

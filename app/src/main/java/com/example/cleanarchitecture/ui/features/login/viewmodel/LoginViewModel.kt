@@ -39,8 +39,7 @@ class LoginViewModel(
             auth.signInWithCredential(credential)
                 .addOnCompleteListener(activity) { authResult ->
                     if (authResult.isSuccessful) {
-                        val user = authResult.result?.user
-                        _loginResult.value = user
+                        _loginResult.value = auth.currentUser
                     } else {
                         val errorMessage = authResult.exception?.message ?: "Error desconocido"
                         _error.value = errorMessage

@@ -84,7 +84,7 @@ fun LoginScreen(
             Column {
                 // Usuario logueado
                 Text(
-                    text = "Bienvenido, ${loginResult?.displayName ?: "Usuario"}",
+                    text = "Bienvenido, ${loginResult?.displayName ?: loginResult?.email ?: "Usuario"}",
                     style = MaterialTheme.typography.headlineMedium
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -100,8 +100,7 @@ fun LoginScreen(
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 16.dp),
+                        .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     TopBar(
@@ -109,28 +108,36 @@ fun LoginScreen(
                         showFavoriteButton = false,
                         title = "LogIn"
                     )
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Image(
-                        painter = painterResource(id = R.drawable.login_icon),
-                        contentDescription = "Login Icon",
-                        modifier = Modifier.size(400.dp)
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        "Hey, nice to see you again!",
-                        fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                        color = Color.Black,
-                        fontSize = 26.sp,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        "How would you like to connect?",
-                        fontFamily = FontFamily(Font(R.font.poppins)),
-                        color = fontGrayLight,
-                        fontSize = 14.sp,
-                        textAlign = TextAlign.Center
-                    )
+
+                   Column(
+                       modifier = Modifier
+                           .fillMaxSize()
+                           .padding(horizontal = 16.dp),
+                       horizontalAlignment = Alignment.CenterHorizontally
+                   ) {
+                       Spacer(modifier = Modifier.height(32.dp))
+                       Image(
+                           painter = painterResource(id = R.drawable.login_icon),
+                           contentDescription = "Login Icon",
+                           modifier = Modifier.size(400.dp)
+                       )
+                       Spacer(modifier = Modifier.height(4.dp))
+                       Text(
+                           "Hey, nice to see you again!",
+                           fontFamily = FontFamily(Font(R.font.poppins_medium)),
+                           color = Color.Black,
+                           fontSize = 26.sp,
+                           textAlign = TextAlign.Center
+                       )
+                       Spacer(modifier = Modifier.height(16.dp))
+                       Text(
+                           "How would you like to connect?",
+                           fontFamily = FontFamily(Font(R.font.poppins)),
+                           color = fontGrayLight,
+                           fontSize = 14.sp,
+                           textAlign = TextAlign.Center
+                       )
+                   }
                 }
 
                 // Este bloque queda abajo siempre

@@ -19,6 +19,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -26,6 +28,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cleanarchitecture.R
+import com.example.cleanarchitecture.ui.theme.fontGrayLight
 
 @Composable
 fun CustomInputField(
@@ -34,7 +37,8 @@ fun CustomInputField(
     label: String,
     isPassword: Boolean = false,
     validationRegex: Regex? = null,
-    errorMessage: String = ""
+    errorMessage: String = "",
+    placeholder: String
 ) {
     var passwordVisible by remember { mutableStateOf(false) }
     var isError by remember { mutableStateOf(false) }
@@ -59,7 +63,20 @@ fun CustomInputField(
             },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
-            shape = RoundedCornerShape(50.dp) ,
+            shape = RoundedCornerShape(5.dp) ,
+            textStyle = TextStyle(
+                fontFamily = FontFamily(Font(R.font.poppins)),
+                fontSize = 16.sp,
+                color = Color.Black
+            ),
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    fontFamily = FontFamily(Font(R.font.poppins_thin)),
+                    fontSize = 16.sp,
+                    color = fontGrayLight
+                )
+            },
             isError = isError,
             visualTransformation = if (isPassword && !passwordVisible) PasswordVisualTransformation() else VisualTransformation.None,
             trailingIcon = {
@@ -79,7 +96,7 @@ fun CustomInputField(
                 fontSize = 12.sp,
                 color = Color.Red,
                 fontFamily = FontFamily(Font(R.font.poppins_medium)),
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+                modifier = Modifier.padding(start = 8.dp, top = 4.dp, end = 4.dp)
             )
         }
     }

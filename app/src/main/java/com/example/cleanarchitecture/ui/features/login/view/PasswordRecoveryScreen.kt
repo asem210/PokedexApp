@@ -18,15 +18,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.cleanarchitecture.R
+import com.example.cleanarchitecture.ui.components.form.view.RecoveryForm
 import com.example.cleanarchitecture.ui.components.header.TopBar
-import com.example.cleanarchitecture.ui.components.form.view.LoginForm
 import com.example.cleanarchitecture.ui.theme.fontGrayMedium
 
 @Composable
-fun GmailLoginScreen(
+
+fun PasswordRecoveryScreen(
     navController: NavController
-    )
-{
+){
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -39,8 +39,9 @@ fun GmailLoginScreen(
             TopBar(
                 onFavoriteClick = { /* Acción para el favorito */ },
                 showFavoriteButton = false,
-                title = "LogIn"
+                title = "Recover your password"
             )
+
             Column(
                 modifier= Modifier
                     .padding(horizontal = 16.dp)
@@ -48,16 +49,15 @@ fun GmailLoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(32.dp))
-
                 Text(
-                    "Welcome back!",
+                    "Having trouble logging in?",
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                     color = fontGrayMedium,
                     fontSize = 26.sp,
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    "Complete your information",
+                    "Don’t worry, it happens to the best of us.",
                     fontFamily = FontFamily(Font(R.font.poppins_semi_bold)),
                     color = Color.Black,
                     fontSize = 26.sp,
@@ -66,7 +66,8 @@ fun GmailLoginScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                LoginForm(navController = navController)
+
+                RecoveryForm(navController=navController)
 
             }
 
