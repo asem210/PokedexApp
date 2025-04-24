@@ -54,6 +54,14 @@ fun PokemonDetailScreen(
         pokemonViewModel.fetchPokemonSpecies(pokemonCode)
     }
 
+    // Llamar a `savePokemon` después de que el Pokémon esté disponible
+    LaunchedEffect(pokemonState) {
+        pokemonState?.let {
+            // Llamar a savePokemon para guardar el Pokémon en la base de datos
+            pokemonViewModel.savePokemon(it)
+        }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier.fillMaxSize(),

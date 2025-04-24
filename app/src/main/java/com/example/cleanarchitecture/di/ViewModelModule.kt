@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
-    viewModel { PokemonViewModel(get(), get()) }
+    viewModel { PokemonViewModel(get(), get(),get()) }
     viewModel { LoginViewModel(FirebaseAuth.getInstance()) }
     viewModel { PokemonCardViewModel() }
 }

@@ -8,13 +8,15 @@ import com.example.domain.model.Pokemon
 import com.example.domain.model.PokemonSpecies
 import com.example.domain.usecase.pokemon.GetPokemonByNameUseCase
 import com.example.domain.usecase.pokemon.GetPokemonSpeciesByNameUseCase
+import com.example.domain.usecase.pokemon.SavePokemonUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class PokemonViewModel(
     private val getPokemonByName: GetPokemonByNameUseCase,
-    private val getPokemonSpeciesByName: GetPokemonSpeciesByNameUseCase
+    private val getPokemonSpeciesByName: GetPokemonSpeciesByNameUseCase,
+    private val insertPokemon: SavePokemonUseCase
 ) : ViewModel() {
 
     private val _pokemonState = MutableStateFlow<Pokemon?>(null)
@@ -53,6 +55,18 @@ class PokemonViewModel(
             } catch (e: Exception) {
                 _speciesState.value = null
                 Log.e("PokemonViewModel", "Error al obtener species: ${e.message}")
+            }
+        }
+    }
+
+    fun savePokemon(pokemon: Pokemon) {
+        viewModelScope.launch {
+            try {
+                insertPokemon(pokemon)
+                _errorMessage.value = null
+            } catch (e: Exception) {
+                Log.e("PokemonViewModel", "Error al guardar Pokémon: ${e.message}")
+                _errorMessage.value = "Error al guardar el Pokémon."
             }
         }
     }

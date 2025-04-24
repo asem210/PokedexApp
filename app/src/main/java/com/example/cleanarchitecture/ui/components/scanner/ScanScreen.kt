@@ -21,8 +21,6 @@ fun ScanScreen(
     onCodeScanned: (String) -> Unit
 ) {
 
-
-
     var qrCodeDetectedMessage by remember { mutableStateOf<String?>(null) }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -32,11 +30,6 @@ fun ScanScreen(
             onQrCodeDetected = { code ->
                 qrCodeDetectedMessage = code // Almacena el código detectado
                 onCodeScanned(code)
-                // Llamamos al ViewModel para obtener el Pokémon
-//                pokemonViewModel.fetchPokemon(code)
-                // Mostrar el código en el log
-                Log.d("QRCodeDetected", "Código QR Detectado: $code")
-                // Navegamos a la pantalla de detalles del Pokémon, pasando el código como argumento
                 navController.navigate("pokemon_detail/$code")
             }
         )
