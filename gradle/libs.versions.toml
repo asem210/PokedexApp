@@ -21,6 +21,8 @@ activityCompose = "1.10.1"
 composeBom = "2024.04.01"
 appcompat = "1.7.0"
 material = "1.12.0"
+room = "2.7.1"
+ksp = "2.0.0-1.0.24"
 
 #koin
 koin = "4.0.0-RC1"
@@ -98,9 +100,15 @@ camera-mlkit-vision = { group = "androidx.camera", name = "camera-mlkit-vision",
 mlkit-barcode-scanning = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "mlkit-barcode-scanning" }
 androidx-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtimeLivedata" }
 
+##Room
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 google-services={id="com.google.gms.google-services",version.ref="google-services"}
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

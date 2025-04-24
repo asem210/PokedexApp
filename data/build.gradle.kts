@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -58,4 +59,9 @@ dependencies {
     // ✅ Koin para inyección de dependencias en Data Layer
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+
+    //Room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation(libs.room.compiler)
 }
