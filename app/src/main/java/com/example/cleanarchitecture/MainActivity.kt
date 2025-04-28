@@ -62,7 +62,10 @@ class MainActivity : ComponentActivity() {
                     },
                     floatingActionButton = {
                         val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-                        if (currentRoute?.startsWith("profile") != true) {
+                        if (
+                            currentRoute != "scan" &&
+                            currentRoute?.startsWith("profile") != true
+                        ) {
                             FloatingButton {
                                 when (permissionState.status) {
                                     is PermissionStatus.Granted -> {

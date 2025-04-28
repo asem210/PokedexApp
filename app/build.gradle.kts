@@ -105,5 +105,14 @@ dependencies {
     implementation (libs.androidx.material.icons.extended)
     implementation(libs.firebase.messaging)
 
+    //LiveData
+    implementation (libs.androidx.lifecycle.livedata.ktx)  // Usa la versión más reciente
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)  // También es útil para ViewModel
+    // build.gradle (module)
+    implementation (libs.lottie.compose)
+
+
+
+
 
 }

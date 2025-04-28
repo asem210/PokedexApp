@@ -20,6 +20,15 @@ class PokemonDbHelper(context: Context) : SQLiteOpenHelper(context, "pokemon_db"
             stats_json TEXT
         )
     """.trimIndent())
+
+        db.execSQL("""
+        CREATE TABLE pokemon_species (
+            name TEXT PRIMARY KEY,
+            flavor_text_entries_json TEXT,
+            gender_rate INTEGER,
+            genera_json TEXT
+        )
+        """.trimIndent())
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

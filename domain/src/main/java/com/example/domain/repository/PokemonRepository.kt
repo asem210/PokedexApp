@@ -6,6 +6,5 @@ import com.example.domain.model.PokemonSpecies
 
 interface PokemonRepository {
     suspend fun getPokemonByName(name: String): Pokemon
-
     suspend fun getPokemonSpeciesByName(name: String):PokemonSpecies
 }

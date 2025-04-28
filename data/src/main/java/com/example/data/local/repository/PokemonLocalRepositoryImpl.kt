@@ -15,7 +15,7 @@ class PokemonLocalRepositoryImpl(
     private val dbHelper = PokemonDbHelper(context)
     private val gson = Gson()
 
-    override fun insertPokemon(pokemon: Pokemon) {
+    override suspend fun insertPokemon(pokemon: Pokemon) {
         val db = dbHelper.writableDatabase
         val values = ContentValues().apply {
             put("id", pokemon.id)
@@ -33,7 +33,7 @@ class PokemonLocalRepositoryImpl(
         db.close()
     }
 
-    override fun getPokemonByName(name: String): Pokemon? {
+    override suspend fun getPokemonByName(name: String): Pokemon? {
         val db = dbHelper.readableDatabase
         val cursor = db.query(
             "pokemon",
@@ -68,5 +68,47 @@ class PokemonLocalRepositoryImpl(
         cursor.close()
         db.close()
         return pokemon
+    }
+
+    override suspend fun insertPokemonSpecies(pokemonSpecies: PokemonSpecies) {
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put("name", pokemonSpecies.name)
+            put("flavor_text_entries_json", gson.toJson(pokemonSpecies.flavorTextEntries))
+            put("gender_rate", pokemonSpecies.gender_rate)
+            put("genera_json", gson.toJson(pokemonSpecies.genera))
+        }
+        db.insert("pokemon_species", null, values)
+        db.close()
+    }
+
+    // Obtener información de la especie de Pokémon por su nombre desde la tabla "pokemon_species"
+    override suspend fun getPokemonSpeciesByName(name: String): PokemonSpecies? {
+        val db = dbHelper.readableDatabase
+        val cursor = db.query(
+            "pokemon_species",
+            null,
+            "name = ?",
+            arrayOf(name),
+            null,
+            null,
+            null
+        )
+
+        val pokemonSpecies = if (cursor.moveToFirst()) {
+            val flavorTextEntries = gson.fromJson<List<FlavorTextEntry>>(cursor.getString(cursor.getColumnIndexOrThrow("flavor_text_entries_json")), object : TypeToken<List<FlavorTextEntry>>() {}.type)
+            val genera = gson.fromJson<List<Genus>>(cursor.getString(cursor.getColumnIndexOrThrow("genera_json")), object : TypeToken<List<Genus>>() {}.type)
+
+            PokemonSpecies(
+                name = cursor.getString(cursor.getColumnIndexOrThrow("name")),
+                flavorTextEntries = flavorTextEntries,
+                gender_rate = cursor.getInt(cursor.getColumnIndexOrThrow("gender_rate")),
+                genera = genera
+            )
+        } else null
+
+        cursor.close()
+        db.close()
+        return pokemonSpecies
     }
 }

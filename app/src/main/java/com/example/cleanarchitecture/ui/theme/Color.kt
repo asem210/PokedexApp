@@ -40,6 +40,8 @@ val fontGrayMedium= Color(0xFF4D4D4D)
 
 val emailButton= Color(0xFF173EA5)
 
+val loadingBackground= Color(0xFF000029)
+
 
 
 

@@ -1,4 +1,4 @@
-package com.example.cleanarchitecture.ui.viewModel.pokemon
+package com.example.cleanarchitecture.ui.components.pokemonCard
 
 import androidx.lifecycle.ViewModel
 import com.example.domain.model.PokemonSpecies

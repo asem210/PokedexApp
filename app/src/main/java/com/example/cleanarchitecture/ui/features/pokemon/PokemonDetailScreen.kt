@@ -1,5 +1,6 @@
 package com.example.cleanarchitecture.ui.features.pokemon
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,11 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
+import com.example.cleanarchitecture.ui.components.loading.LoadingScreen
 import com.example.cleanarchitecture.ui.components.messageError.PokemonNotFound
+import com.example.cleanarchitecture.ui.components.network.NetworkStatusViewModel
 import com.example.cleanarchitecture.ui.components.pokemonCard.PokemonCard
 import com.example.cleanarchitecture.utils.getTypeColor
 import com.example.cleanarchitecture.utils.isColorDark
@@ -24,15 +28,20 @@ import org.koin.androidx.compose.koinViewModel
 fun PokemonDetailScreen(
     navController: NavController,
     pokemonCode: String,
-    pokemonViewModel: PokemonViewModel = koinViewModel()
+    pokemonViewModel: PokemonViewModel = koinViewModel(),
+    networkStatusViewModel: NetworkStatusViewModel = koinViewModel(),
 ) {
-
-    val pokemonState by pokemonViewModel.pokemonState.collectAsState()
-    val errorMessage by pokemonViewModel.errorMessage.collectAsState()
-    val speciesState by pokemonViewModel.speciesState.collectAsState()
+    // Usamos observeAsState para observar LiveData en lugar de collectAsState
+    val pokemonState by pokemonViewModel.pokemonLiveData.observeAsState()
+    val errorMessage by pokemonViewModel.errorMessageLiveData.observeAsState()
+    val speciesState by pokemonViewModel.speciesLiveData.observeAsState()
+    val isConnected by networkStatusViewModel.isConnected.collectAsState()
+    val isLoading by pokemonViewModel.isLoading.observeAsState(false)
 
     val systemUiController = rememberSystemUiController()
     val typeColor = getTypeColor(pokemonState)
+
+
 
     BackHandler {
         systemUiController.setStatusBarColor(
@@ -42,23 +51,23 @@ fun PokemonDetailScreen(
         navController.popBackStack()
     }
 
-    LaunchedEffect(typeColor) {
-        systemUiController.setStatusBarColor(
-            color = typeColor,
-            darkIcons = !isColorDark(typeColor)
-        )
+    LaunchedEffect(isLoading) {
+        if (!isLoading && pokemonState != null) {
+            systemUiController.setStatusBarColor(
+                color = typeColor,
+                darkIcons = true// Si es oscuro, cambia los iconos
+            )
+            systemUiController.setNavigationBarColor(
+                color = Color.Transparent, // También cambiamos el color del NavigationBar
+            )
+        }
     }
 
-    LaunchedEffect(pokemonCode) {
-        pokemonViewModel.fetchPokemon(pokemonCode)
-        pokemonViewModel.fetchPokemonSpecies(pokemonCode)
-    }
-
-    // Llamar a `savePokemon` después de que el Pokémon esté disponible
-    LaunchedEffect(pokemonState) {
-        pokemonState?.let {
-            // Llamar a savePokemon para guardar el Pokémon en la base de datos
-            pokemonViewModel.savePokemon(it)
+    LaunchedEffect(pokemonCode, isConnected) {
+        if (pokemonState == null) {
+            if (isConnected) {
+                pokemonViewModel.fetchPokemonData(pokemonCode)
+            }
         }
     }
 
@@ -67,17 +76,20 @@ fun PokemonDetailScreen(
             modifier = Modifier.fillMaxSize(),
         ) {
             when {
+                isLoading -> {
+                    LoadingScreen()
+                }
                 errorMessage != null -> {
                     PokemonNotFound()
                 }
-                pokemonState != null -> {
-                    PokemonCard(pokemonState,speciesState)
-                }
-                else -> {
+                pokemonState == null && !isConnected -> {
                     Text(
-                        text = "Loading Pokemon Information",
+                        text = "No hay conexión y no se encontró el Pokémon.",
                         modifier = Modifier.align(Alignment.Center)
                     )
+                }
+                pokemonState != null -> {
+                    PokemonCard(pokemonState, speciesState)
                 }
             }
         }
