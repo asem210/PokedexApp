@@ -63,8 +63,7 @@ class MainActivity : ComponentActivity() {
                     floatingActionButton = {
                         val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
                         if (
-                            currentRoute != "scan" &&
-                            currentRoute?.startsWith("profile") != true
+                            currentRoute == "pokedex" || currentRoute == "favorite" || currentRoute=="regions" || currentRoute=="home"
                         ) {
                             FloatingButton {
                                 when (permissionState.status) {

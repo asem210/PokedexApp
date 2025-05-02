@@ -59,4 +59,14 @@ dependencies {
     // ✅ Koin para inyección de dependencias en Data Layer
     implementation(libs.koin.android)
     implementation(libs.koin.core)
+
+    //Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+
+    // Firestore SDK
+    implementation (libs.firebase.firestore.ktx)
+
+    // Coroutines para Firebase
+    implementation (libs.kotlinx.coroutines.play.services)
 }

@@ -23,7 +23,7 @@ class PokemonViewModel(
     private val getPokemonByName: GetPokemonByNameUseCase,
     private val getPokemonSpeciesByName: GetPokemonSpeciesByNameUseCase,
     private val localPokemonUseCase: LocalPokemonUseCase,
-    private val networkChecker: NetworkChecker
+    private val networkChecker: NetworkChecker,
 ) : ViewModel() {
 
     private val _pokemonLiveData = MutableLiveData<Pokemon?>()
@@ -42,7 +42,7 @@ class PokemonViewModel(
         return withContext(Dispatchers.IO) { networkChecker.isNetworkAvailable() }
     }
 
-    suspend fun fetchPokemon(name: String) {
+    private suspend fun fetchPokemon(name: String) {
         try {
             val nameLower = name.lowercase()
             if (isNetworkAvailable()) {
@@ -61,7 +61,7 @@ class PokemonViewModel(
         }
     }
 
-    suspend fun fetchPokemonSpecies(name: String) {
+    private suspend fun fetchPokemonSpecies(name: String) {
         try {
             val nameLower = name.lowercase()
             if (isNetworkAvailable()) {

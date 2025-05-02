@@ -1,6 +1,5 @@
 package com.example.cleanarchitecture.ui.features.pokemon
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,7 +19,6 @@ import com.example.cleanarchitecture.ui.components.messageError.PokemonNotFound
 import com.example.cleanarchitecture.ui.components.network.NetworkStatusViewModel
 import com.example.cleanarchitecture.ui.components.pokemonCard.PokemonCard
 import com.example.cleanarchitecture.utils.getTypeColor
-import com.example.cleanarchitecture.utils.isColorDark
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.koinViewModel
 
@@ -31,7 +29,6 @@ fun PokemonDetailScreen(
     pokemonViewModel: PokemonViewModel = koinViewModel(),
     networkStatusViewModel: NetworkStatusViewModel = koinViewModel(),
 ) {
-    // Usamos observeAsState para observar LiveData en lugar de collectAsState
     val pokemonState by pokemonViewModel.pokemonLiveData.observeAsState()
     val errorMessage by pokemonViewModel.errorMessageLiveData.observeAsState()
     val speciesState by pokemonViewModel.speciesLiveData.observeAsState()
@@ -40,8 +37,6 @@ fun PokemonDetailScreen(
 
     val systemUiController = rememberSystemUiController()
     val typeColor = getTypeColor(pokemonState)
-
-
 
     BackHandler {
         systemUiController.setStatusBarColor(
@@ -55,19 +50,17 @@ fun PokemonDetailScreen(
         if (!isLoading && pokemonState != null) {
             systemUiController.setStatusBarColor(
                 color = typeColor,
-                darkIcons = true// Si es oscuro, cambia los iconos
+                darkIcons = true
             )
             systemUiController.setNavigationBarColor(
-                color = Color.Transparent, // También cambiamos el color del NavigationBar
+                color = Color.Transparent,
             )
         }
     }
 
     LaunchedEffect(pokemonCode, isConnected) {
         if (pokemonState == null) {
-            if (isConnected) {
-                pokemonViewModel.fetchPokemonData(pokemonCode)
-            }
+            pokemonViewModel.fetchPokemonData(pokemonCode)
         }
     }
 

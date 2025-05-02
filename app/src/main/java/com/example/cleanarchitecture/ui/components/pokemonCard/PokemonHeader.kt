@@ -79,7 +79,8 @@ fun PokemonHeader(
     ) {
         TopBar(
             onFavoriteClick = { /* Acción para el favorito */ },
-            showFavoriteButton = true
+            showFavoriteButton = true,
+            pokemon = pokemon
         )
 
         Box(

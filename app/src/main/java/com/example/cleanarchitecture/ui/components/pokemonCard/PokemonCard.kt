@@ -10,16 +10,25 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.cleanarchitecture.ui.features.favorites.FavoriteViewModel
+import com.example.cleanarchitecture.ui.features.login.viewmodel.LoginViewModel
 import com.example.domain.model.Pokemon
 import com.example.domain.model.PokemonSpecies
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun PokemonCard(pokemonState: Pokemon?, speciesState: PokemonSpecies?) {
-    val cardviewModel: PokemonCardViewModel = viewModel()
-
+fun PokemonCard(
+    pokemonState: Pokemon?,
+    speciesState: PokemonSpecies?,
+    cardviewModel: PokemonCardViewModel = viewModel(),
+) {
     val genusInEnglish: String? = speciesState?.genera
         ?.firstOrNull { it.language == "en" }
         ?.genus

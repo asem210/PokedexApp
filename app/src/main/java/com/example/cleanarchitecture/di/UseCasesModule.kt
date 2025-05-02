@@ -13,6 +13,5 @@ val useCaseModule = module {
     factory { GetPokemonSpeciesByNameUseCase(get())}
     factory { LocalPokemonUseCase(get()) }
 
-
-    single { NetworkChecker(get()) } // <-- Aquí declaras NetworkChecker
+    single { NetworkChecker(get()) }// <-- Aquí declaras NetworkChecker
 }

@@ -53,6 +53,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.lifecycle.viewmodel.android)
+    implementation(libs.androidx.lifecycle.viewmodel.android)
+    implementation(libs.androidx.lifecycle.viewmodel.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -65,7 +68,7 @@ dependencies {
     implementation(libs.koin.android.compose)
 
     //Navigation
-    implementation (libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.compose)
 
     // ✅ Gson para parsear JSON
     implementation(libs.gson)
@@ -79,12 +82,12 @@ dependencies {
     implementation(libs.zxing.core)
 
     //Handle Permissions
-    implementation (libs.accompanist.permissions)
+    implementation(libs.accompanist.permissions)
 
-    implementation (libs.androidx.camera.core)
-    implementation (libs.androidx.camera.camera2)
-    implementation (libs.androidx.camera.lifecycle)
-    implementation (libs.androidx.camera.view)
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.view)
 
     // ML Kit Barcode Scanning
     implementation(libs.mlkit.barcode.scanning)
@@ -102,17 +105,16 @@ dependencies {
     //Firebase auth
     implementation(libs.firebase.auth.ktx)
     implementation(libs.play.services.auth)
-    implementation (libs.androidx.material.icons.extended)
+    implementation(libs.androidx.material.icons.extended)
     implementation(libs.firebase.messaging)
+    implementation (libs.firebase.firestore.ktx)  // Actualiza a la versión más reciente
+
 
     //LiveData
-    implementation (libs.androidx.lifecycle.livedata.ktx)  // Usa la versión más reciente
-    implementation (libs.androidx.lifecycle.viewmodel.ktx)  // También es útil para ViewModel
+    implementation(libs.androidx.lifecycle.livedata.ktx)  // Usa la versión más reciente
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)  // También es útil para ViewModel
     // build.gradle (module)
-    implementation (libs.lottie.compose)
-
-
-
-
-
+    implementation(libs.lottie.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
 }
+
